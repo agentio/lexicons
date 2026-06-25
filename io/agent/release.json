@@ -1,0 +1,164 @@
+{
+    "lexicon": 1,
+    "id": "io.agent.release",
+    "defs": {
+        "main": {
+            "type": "record",
+            "description": "A record representing a software release.",
+            "key": "tid",
+            "record": {
+                "type": "object",
+                "required": [
+                    "name",
+                    "version",
+                    "createdAt"
+                ],
+                "properties": {
+                    "name": {
+                        "description": "The name or identifier of the software.",
+                        "type": "string",
+                        "maxLength": 100
+                    },
+                    "version": {
+                        "description": "The semantic version string, e.g., v1.2.0-beta.1",
+                        "type": "string",
+                        "maxLength": 50
+                    },
+                    "createdAt": {
+                        "description": "Date and time the release was published.",
+                        "type": "string",
+                        "format": "datetime"
+                    },
+                    "notes": {
+                        "description": "Release notes.",
+                        "type": "string",
+                        "format": "markdown",
+                        "maxLength": 3000
+                    },
+                    "changes": {
+                        "description": "Changelog entries for this release.",
+                        "type": "ref",
+                        "ref": "#changes"
+                    },
+                    "assets": {
+                        "description": "List of download links associated with this release.",
+                        "type": "array",
+                        "items": {
+                            "type": "ref",
+                            "ref": "#asset"
+                        }
+                    },
+                    "dependencies": {
+                        "description": "The software dependencies of this release.",
+                        "type": "array",
+                        "items": {
+                            "type": "ref",
+                            "ref": "#dependency"
+                        }
+                    }
+                }
+            }
+        },
+        "asset": {
+            "description": "A link to a downloadable asset associated with a release.",
+            "type": "object",
+            "required": [
+                "name",
+                "url"
+            ],
+            "properties": {
+                "name": {
+                    "description": "Name of the asset (e.g., macos-x64, source-code).",
+                    "type": "string"
+                },
+                "url": {
+                    "description": "Direct download link.",
+                    "type": "string",
+                    "format": "uri"
+                },
+                "sha256": {
+                    "description": "SHA-256 checksum.",
+                    "type": "string"
+                }
+            }
+        },
+        "changes": {
+            "description": "Changelog entries for a release, informed by https://keepachangelog.com/en/1.1.0/.",
+            "type": "object",
+            "properties": {
+                "added": {
+                    "description": "New features.",
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "format": "markdown",
+                        "maxLength": 1000
+                    }
+                },
+                "modified": {
+                    "description": "Modifications of existing features.",
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "format": "markdown",
+                        "maxLength": 1000
+                    }
+                },
+                "deprecated": {
+                    "description": "Deprecations.",
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "format": "markdown",
+                        "maxLength": 1000
+                    }
+                },
+                "removed": {
+                    "description": "Removed features.",
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "format": "markdown",
+                        "maxLength": 1000
+                    }
+                },
+                "fixed": {
+                    "description": "Fixed bugs.",
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "format": "markdown",
+                        "maxLength": 1000
+                    }
+                },
+                "security": {
+                    "description": "Security updates.",
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "format": "markdown",
+                        "maxLength": 1000
+                    }
+                }
+            }
+        },
+        "dependency": {
+            "description": "A software dependency of the release",
+            "type": "object",
+            "required": [
+                "name",
+                "version"
+            ],
+            "properties": {
+                "name": {
+                    "description": "The name of the dependency",
+                    "type": "string"
+                },
+                "version": {
+                    "description": "The version of the dependency",
+                    "type": "string"
+                }
+            }
+        }
+    }
+}
