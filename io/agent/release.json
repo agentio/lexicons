@@ -5,7 +5,7 @@
         "main": {
             "type": "record",
             "description": "A record representing a software release.",
-            "key": "tid",
+            "key": "string",
             "record": {
                 "type": "object",
                 "required": [
@@ -20,7 +20,7 @@
                         "maxLength": 100
                     },
                     "version": {
-                        "description": "The semantic version string, e.g., v1.2.0-beta.1",
+                        "description": "The semantic version string, e.g., 1.2.0-beta.1",
                         "type": "string",
                         "maxLength": 50
                     },
@@ -35,10 +35,10 @@
                         "format": "markdown",
                         "maxLength": 3000
                     },
-                    "changes": {
-                        "description": "Changelog entries for this release.",
-                        "type": "ref",
-                        "ref": "#changes"
+                    "details": {
+                        "description": "A link to a human-readable page with more details about the release.",
+                        "type": "string",
+                        "format": "uri"
                     },
                     "assets": {
                         "description": "List of download links associated with this release.",
@@ -68,8 +68,13 @@
             ],
             "properties": {
                 "name": {
-                    "description": "Name of the asset (e.g., macos-x64, source-code).",
-                    "type": "string"
+                    "description": "Name of the asset.",
+                    "type": "string",
+                    "knownValues": [
+                        "linux_amd64",
+                        "linux_arm64",
+                        "darwin_arm64"
+                    ]
                 },
                 "url": {
                     "description": "Direct download link.",
@@ -79,66 +84,6 @@
                 "sha256": {
                     "description": "SHA-256 checksum.",
                     "type": "string"
-                }
-            }
-        },
-        "changes": {
-            "description": "Changelog entries for a release, informed by https://keepachangelog.com/en/1.1.0/.",
-            "type": "object",
-            "properties": {
-                "added": {
-                    "description": "New features.",
-                    "type": "array",
-                    "items": {
-                        "type": "string",
-                        "format": "markdown",
-                        "maxLength": 1000
-                    }
-                },
-                "modified": {
-                    "description": "Modifications of existing features.",
-                    "type": "array",
-                    "items": {
-                        "type": "string",
-                        "format": "markdown",
-                        "maxLength": 1000
-                    }
-                },
-                "deprecated": {
-                    "description": "Deprecations.",
-                    "type": "array",
-                    "items": {
-                        "type": "string",
-                        "format": "markdown",
-                        "maxLength": 1000
-                    }
-                },
-                "removed": {
-                    "description": "Removed features.",
-                    "type": "array",
-                    "items": {
-                        "type": "string",
-                        "format": "markdown",
-                        "maxLength": 1000
-                    }
-                },
-                "fixed": {
-                    "description": "Fixed bugs.",
-                    "type": "array",
-                    "items": {
-                        "type": "string",
-                        "format": "markdown",
-                        "maxLength": 1000
-                    }
-                },
-                "security": {
-                    "description": "Security updates.",
-                    "type": "array",
-                    "items": {
-                        "type": "string",
-                        "format": "markdown",
-                        "maxLength": 1000
-                    }
                 }
             }
         },
